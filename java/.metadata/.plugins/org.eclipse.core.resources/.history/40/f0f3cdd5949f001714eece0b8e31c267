@@ -1,0 +1,47 @@
+
+public class Monitor {
+   private int N;
+   private int buffer[];
+   private int count = 0; 
+   private int lo = 0;
+   private int hi = 0;
+   
+   public Monitor(int size) {
+	   N = size;
+	   buffer = new int[N];
+   }
+   
+	public synchronized void insert(int val) {
+		if (count == N) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		buffer[hi] = val;
+		hi = (hi + 1) % N;
+		count = count + 1;
+		if (count == 1)
+			notify();
+	}
+	
+	public synchronized int remove() {
+		int val;
+		if (count == 0) {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+	    val = buffer[lo];
+	    lo = (lo + 1) % N;
+	    if (count == N - 1)
+	    	notify();
+	    return val;
+	}
+}

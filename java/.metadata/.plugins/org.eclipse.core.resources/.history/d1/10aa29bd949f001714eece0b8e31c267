@@ -1,0 +1,21 @@
+
+public class Consumidor implements Runnable {
+
+	private Monitor monitor;
+	public Consumidor(Monitor mon) {
+		monitor = mon;
+	}
+	public void run() {
+		int item;
+		while (true) {
+			item = monitor.remove();
+			consume_item(item);
+		}
+
+	}
+	private void consume_item(int item) {
+		System.out.println("Consumidor: Consumindo " + item);
+		
+	}
+
+}

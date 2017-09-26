@@ -1,0 +1,23 @@
+import java.util.Random;
+
+public class Produtor implements Runnable {
+
+	private Monitor monitor;
+	public Produtor(Monitor mon) {
+		monitor = mon;
+	}
+	public void run() {
+		int item;
+		while(true) {
+			item = produce_item();
+			monitor.insert(item);
+		}
+	}
+	private int produce_item() {
+		// TODO Auto-generated method stub
+		Random r = new Random();
+		System.out.println("Produtor: Inserindo " + item);
+		return r.nextInt(100);
+	}
+
+}
